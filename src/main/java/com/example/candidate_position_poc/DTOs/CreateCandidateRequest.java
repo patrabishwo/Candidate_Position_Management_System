@@ -17,7 +17,6 @@ public class CreateCandidateRequest {
     @NotBlank(message = "Name  is  required")
     @Size(max=50, message = "Name  must not  exceed  50  characters")
     private String name;
-
     @NotBlank(message = "Email is  required")
     @Email(message = "Invalid email  format")
     private  String email;;
