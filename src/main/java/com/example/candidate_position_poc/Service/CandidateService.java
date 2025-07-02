@@ -96,7 +96,6 @@ public class CandidateService {
     }
 
 
-
     public void deleteCandidateById(Long id) {
         if (!candidateRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidate not found");
