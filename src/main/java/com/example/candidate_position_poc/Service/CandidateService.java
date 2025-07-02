@@ -24,7 +24,6 @@ public class CandidateService {
 
     private  final CandidateRepository candidateRepository;
 
-
     private  final PositionRepository positionRepository;
 
     public Candidate createCandidate(CreateCandidateRequest request) {
