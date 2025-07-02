@@ -6,6 +6,7 @@ import com.example.candidate_position_poc.Entity.Candidate;
 import com.example.candidate_position_poc.Entity.Position;
 import com.example.candidate_position_poc.Repositories.CandidateRepository;
 import com.example.candidate_position_poc.Repositories.PositionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,20 +18,20 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class CandidateService {
 
-    @Autowired
-    private CandidateRepository candidateRepository;
 
-    @Autowired
-    private PositionRepository positionRepository;
+    private  final CandidateRepository candidateRepository;
+
+
+    private  final PositionRepository positionRepository;
 
     public Candidate createCandidate(CreateCandidateRequest request) {
         if (candidateRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
 
-        // Age check
         Period age = Period.between(request.getDob(), LocalDate.now());
         if (age.getYears() < 18) {
             throw new IllegalArgumentException("Candidate must be at least 18 years old");
