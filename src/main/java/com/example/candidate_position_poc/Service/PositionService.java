@@ -6,7 +6,9 @@ import com.example.candidate_position_poc.Repositories.PositionRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,4 +32,17 @@ public class PositionService {
     public List<Position>  getAllPosition(){
         return positionRepository.findAll();
     }
+
+    public Position getPositionById(Long id) {
+        return positionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Position not found"));
+    }
+
+    public void deletePositionById(Long id) {
+        if (!positionRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Position not found");
+        }
+        positionRepository.deleteById(id);
+    }
+
 }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/candidates")
 @RequiredArgsConstructor
@@ -32,4 +34,20 @@ public class CandidateController {
         return ResponseEntity.ok(updatedCandidate);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Candidate>> getAllCandidates() {
+        return ResponseEntity.ok(candidateService.getAllCandidates());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Candidate> getCandidateById(@PathVariable Long id) {
+        Candidate candidate = candidateService.getCandidateById(id);
+        return ResponseEntity.ok(candidate);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCandidateById(@PathVariable Long id) {
+        candidateService.deleteCandidateById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

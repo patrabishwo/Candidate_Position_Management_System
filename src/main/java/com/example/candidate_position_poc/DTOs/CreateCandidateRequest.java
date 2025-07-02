@@ -22,8 +22,6 @@ public class CreateCandidateRequest {
     private  String email;;
     @NotNull(message = "DOB is required")
     private LocalDate dob;
-
-
     @NotEmpty(message = "At  least  one position  id  is required")
     private List<Long> positionIds;
 

@@ -17,7 +17,6 @@ import java.util.List;
 public class PositionController {
 
     private final PositionService positionService;
-
     @PostMapping
     public ResponseEntity<Position> createPosition(@Valid @RequestBody CreatePositionRequest request) {
         Position savedPosition = positionService.createPosition(request);
@@ -28,5 +27,17 @@ public class PositionController {
     @GetMapping
     public ResponseEntity<List<Position>> getAllPositions() {
         return ResponseEntity.ok(positionService.getAllPosition());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Position> getPositionById(@PathVariable Long id) {
+        Position position = positionService.getPositionById(id);
+        return ResponseEntity.ok(position);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePositionById(@PathVariable Long id) {
+        positionService.deletePositionById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

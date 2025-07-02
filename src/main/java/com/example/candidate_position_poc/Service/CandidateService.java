@@ -7,7 +7,9 @@ import com.example.candidate_position_poc.Entity.Position;
 import com.example.candidate_position_poc.Repositories.CandidateRepository;
 import com.example.candidate_position_poc.Repositories.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -81,6 +83,23 @@ public class CandidateService {
         }
 
         return candidateRepository.save(candidate);
+    }
+    public List<Candidate> getAllCandidates() {
+        return candidateRepository.findAll();
+    }
+
+
+    public Candidate getCandidateById(Long id) {
+        return candidateRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidate not found"));
+    }
+
+
+    public void deleteCandidateById(Long id) {
+        if (!candidateRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidate not found");
+        }
+        candidateRepository.deleteById(id);
     }
 }
 
